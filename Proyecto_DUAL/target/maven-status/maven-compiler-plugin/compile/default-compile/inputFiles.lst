@@ -1,0 +1,6 @@
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/PspDualApplication.java
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/config/SecurityConfig.java
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/controller/ProductoController.java
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/entity/Producto.java
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/repository/ProductoRepository.java
+/home/melissa/Escritorio/PSP/Proyecto_DUAL/src/main/java/com/dualpsp/app/service/ProductoService.java

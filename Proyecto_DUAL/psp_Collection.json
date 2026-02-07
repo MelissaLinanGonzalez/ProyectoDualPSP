@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "b6a7b2d1-4f1e-4b5a-9c3d-8e7f6a5b4c2d",
+		"name": "PSP Dual - API Tests",
+		"description": "Colección de pruebas para verificar RA4 y RA5 del proyecto de FP Dual.\nIncluye pruebas de CRUD, seguridad por roles y validación de datos.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. ADMIN - Crear Producto (POST)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Portátil Gaming\",\n    \"descripcion\": \"MSI con RTX 4060 y 16GB RAM\",\n    \"precio\": 1200.50,\n    \"stock\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos"
+					]
+				},
+				"description": "Crea un producto usando el rol ADMIN. Debe devolver 201 Created."
+			},
+			"response": []
+		},
+		{
+			"name": "2. ADMIN - Listar Productos (GET)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos"
+					]
+				},
+				"description": "Lista todos los productos. Accesible para ADMIN."
+			},
+			"response": []
+		},
+		{
+			"name": "3. USER - Listar Productos (GET)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos"
+					]
+				},
+				"description": "Lista productos con rol USER. Debe devolver 200 OK (Lectura permitida)."
+			},
+			"response": []
+		},
+		{
+			"name": "4. ADMIN - Actualizar Producto (PUT)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Portátil Gaming PRO\",\n    \"descripcion\": \"MSI actualizado con 32GB RAM\",\n    \"precio\": 1350.00,\n    \"stock\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/productos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"1"
+					]
+				},
+				"description": "Actualiza el producto con ID 1. Requiere rol ADMIN."
+			},
+			"response": []
+		},
+		{
+			"name": "5. SEGURIDAD - USER intenta borrar (DELETE)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "user123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/productos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"1"
+					]
+				},
+				"description": "Prueba de seguridad (RA5). El usuario USER intenta borrar. \n**Resultado esperado:** 403 Forbidden."
+			},
+			"response": []
+		},
+		{
+			"name": "6. VALIDACIÓN - Datos inválidos (POST)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"\",\n    \"precio\": -50,\n    \"stock\": -10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos"
+					]
+				},
+				"description": "Prueba de validación (RA5). Se envían datos incorrectos (precio negativo, nombre vacío).\n**Resultado esperado:** 400 Bad Request."
+			},
+			"response": []
+		},
+		{
+			"name": "7. ADMIN - Borrar Producto (DELETE)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/productos/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"productos",
+						"1"
+					]
+				},
+				"description": "Elimina el producto con ID 1. Requiere rol ADMIN. \n**Resultado esperado:** 204 No Content."
+			},
+			"response": []
+		}
+	]
+}
